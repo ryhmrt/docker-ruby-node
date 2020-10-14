@@ -1,0 +1,23 @@
+--- missing.h.org	2020-08-05 01:20:51.000000000 +0900
++++ missing.h	2020-08-05 01:27:06.000000000 +0900
+@@ -166,6 +166,8 @@
+ #    include <ieeefp.h>
+ #    endif
+ #  define isinf(x) (!finite(x) && !isnan(x))
++#  elif __cplusplus >= 201103L
++#    include <cmath> // it must include constexpr bool isinf(double);
+ #  else
+ RUBY_EXTERN int isinf(double);
+ #  endif
+@@ -174,7 +176,11 @@
+ 
+ #ifndef isnan
+ # ifndef HAVE_ISNAN
++#  if __cplusplus >= 201103L
++#    include <cmath> // it must include constexpr bool isnan(double);
++#  else
+ RUBY_EXTERN int isnan(double);
++#  endif
+ # endif
+ #endif
+ 
